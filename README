@@ -7,3 +7,6 @@ set up your postgres shit
 $ creatdb close_enough
 $ rake db:migrate
 
+Grid based search of Google Places
+(currently in 100x100 grid, requiring 10,000 GooglePlaces API requests, and uses a subset of types)
+$ ruby places.rb
