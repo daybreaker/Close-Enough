@@ -3,7 +3,9 @@
   <head>
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
     <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script language="javascript" type="text/javascript" src="bootstrap-modal.js"></script>
+    <script language="javascript" type="text/javascript" src="public/javascript/underscore-min.js"></script>
+    <script language="javascript" type="text/javascript" src="public/javascript/bootstrap-modal.js"></script>
+    <script language="javascript" type="text/javascript" src="public/javascript/bootstrap-tabs.js"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDCEhOTsxuuXVPsHbA4rPofhK1azdoF7-M&sensor=true"></script>
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
@@ -13,20 +15,62 @@
       body { height: 100%; margin: 0; padding-top: 40px }
     </style>
 
+    <script id="infoTemplate" type="text/template">
+      <ul class="tabs" data-tabs="tabs">
+        <li class="active"><a href="#event">Event</a></li>
+        <li><a href="#event-location">@ <%= name %></a></li>
+      </ul>
+
+      <div class="pill-content">
+        <div class="active" id="event">
+          <img src="public/images/halloween.jpg" />
+        </div>
+        <div id="event-location">Location Info</div>
+      </div>
+    </script>
+
     <script type="text/javascript">
 
       var geocoder;
       var map;
-      var marker;
+      var markers = [];
 
-      var contentString = 
-      '<div id="content">' +
-      '<img src="halloween.jpg" />' +
-      '</div>';
+      var test_locations = 
+      { 
+        "locations": 
+          [
+            {"name":"45 Tchoup", "lat":29.9355743, "lng":-90.08161630000001},
+            {"name":"Igor's Buddha Belly Bar-Grill", "lat":29.917199, "lng":-90.103193},
+            {"name":"Mel's Snoballs", "lat":29.912109, "lng":-90.05478},
+            {"name":"Monkey Hill Bar", "lat":29.920983, "lng":-90.098914},
+          ]
+      }
 
-      var infowindow = new google.maps.InfoWindow({
-          content: contentString
-      });
+      function loadTestLocations() {
+        for (var i = 0; i < test_locations.locations.length; i++) {
+          // render map marker
+          markers.push( setLocMarker(test_locations.locations[i]) );
+          attachInfoWindow(_.last(markers), test_locations.locations[i]);
+        }
+      } 
+
+      function setLocMarker(loc) {
+        locPos = new google.maps.LatLng(loc.lat,loc.lng);
+        return new google.maps.Marker({
+          map: map,
+          animation: google.maps.Animation.DROP,
+          position: locPos 
+        });
+      }
+
+      function attachInfoWindow(marker, loc) {
+        var infowindow = new google.maps.InfoWindow(
+            { content: _.template($('#infoTemplate').html())(loc)
+            });
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+      }
 
       function codeAddress() {
         geocoder.geocode( { 'address': '2023 Coliseum St., New Orleans LA. 70130'}, function(results, status) {
@@ -92,7 +136,8 @@
           handleNoGeolocation(browserSupportFlag);
         }
 
-        codeAddress();
+        //codeAddress();
+        loadTestLocations();
 
       }
 
@@ -156,5 +201,7 @@
     </div>
   </body>
 </html>
+
+
 
 
