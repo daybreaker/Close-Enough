@@ -1,0 +1,9 @@
+close enough
+-----
+
+$ bundle install
+
+set up your postgres shit
+$ creatdb close_enough
+$ rake db:migrate
+
