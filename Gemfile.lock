@@ -1,10 +1,17 @@
 GIT
   remote: git@github.com:bhelx/close_enough_ocr
-  revision: 2b06a9ef0715b8fbfb3e3c51c76d5a5ba7d8568e
+  revision: 436631e4171593f709770d41e879cc0d65ed3fae
   branch: master
   specs:
     close_enough_ocr (0.0.1)
       tre-ruby
+
+GIT
+  remote: git@github.com:bhelx/ruby-tesseract.git
+  revision: 8b54e0493d49cdf7ae313a061e3212a5c2e005f5
+  branch: master
+  specs:
+    tesseract (0.0.1)
 
 GEM
   remote: http://rubygems.org/
@@ -80,3 +87,4 @@ DEPENDENCIES
   shotgun
   sinatra
   sinatra-activerecord
+  tesseract!

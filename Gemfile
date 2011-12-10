@@ -13,5 +13,6 @@ gem 'pry'
 
 gem 'close_enough_ocr', :git => 'git@github.com:bhelx/close_enough_ocr', :branch => 'master'
 
+gem 'tesseract', :git => 'git@github.com:bhelx/ruby-tesseract.git', :branch => 'master'
 
 
