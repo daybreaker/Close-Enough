@@ -1,3 +1,18 @@
+GIT
+  remote: git@github.com:bhelx/close_enough_ocr
+  revision: 436631e4171593f709770d41e879cc0d65ed3fae
+  branch: master
+  specs:
+    close_enough_ocr (0.0.1)
+      tre-ruby
+
+GIT
+  remote: git@github.com:bhelx/ruby-tesseract.git
+  revision: 8b54e0493d49cdf7ae313a061e3212a5c2e005f5
+  branch: master
+  specs:
+    tesseract (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -14,6 +29,7 @@ GEM
       multi_json (~> 1.0)
     arel (2.2.1)
     builder (3.0.0)
+    coderay (0.9.8)
     geocoder (1.1.0)
     geokit (1.6.0)
     google_places (0.0.4)
@@ -22,17 +38,27 @@ GEM
       multi_json
       multi_xml
     i18n (0.6.0)
+    method_source (0.6.7)
+      ruby_parser (>= 2.3.1)
     multi_json (1.0.4)
     multi_xml (0.4.1)
     nokogiri (1.5.0)
     pg (0.12.0)
       rake-compiler (~> 0.7)
+    pry (0.9.7.4)
+      coderay (~> 0.9.8)
+      method_source (~> 0.6.7)
+      ruby_parser (>= 2.3.1)
+      slop (~> 2.1.0)
     rack (1.3.5)
     rack-protection (1.1.4)
       rack
     rake (0.9.2.2)
     rake-compiler (0.7.9)
       rake
+    ruby_parser (2.3.1)
+      sexp_processor (~> 3.0)
+    sexp_processor (3.0.9)
     shotgun (0.9)
       rack (>= 1.0)
     sinatra (1.3.1)
@@ -41,7 +67,9 @@ GEM
       tilt (~> 1.3, >= 1.3.3)
     sinatra-activerecord (0.1.3)
       sinatra (>= 0.9.4)
+    slop (2.1.0)
     tilt (1.3.3)
+    tre-ruby (0.1.1)
     tzinfo (0.3.31)
 
 PLATFORMS
@@ -49,11 +77,14 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  close_enough_ocr!
   geocoder
   geokit
   google_places
   nokogiri
   pg
+  pry
   shotgun
   sinatra
   sinatra-activerecord
+  tesseract!

@@ -5,8 +5,8 @@ require 'active_record'
 require 'pg'
 require 'uri'
 
-load 'db/models.rb'
-
+require_relative 'db/models'
+require_relative 'db/load_locations'
 
 get '/' do
   @locations = Location.all
