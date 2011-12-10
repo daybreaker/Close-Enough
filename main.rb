@@ -9,6 +9,10 @@ require 'uri'
 require_relative 'db/models'
 require_relative 'db/load_locations'
 
+configure do 
+  set :public_folder, File.dirname(__FILE__) + '/public'
+end
+
 get '/' do
   @locations = Location.all
   erb :index
