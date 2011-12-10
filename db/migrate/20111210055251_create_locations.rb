@@ -1,8 +1,8 @@
 class CreateLocations < ActiveRecord::Migration
   def self.up
     create_table :locations do |t|
-      t.integer  :gid
-      t.integer  :cid
+      t.string  :gid
+      t.string  :cid
       t.text  :address_components
       t.string  :formatted_address
       t.string  :icon

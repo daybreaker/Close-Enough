@@ -7,8 +7,8 @@ ActiveRecord::Base.establish_connection(
   :encoding => 'utf8'
 )
 
-=begin
+
 class Location < ActiveRecord::Base 
-  set_table_name 'places'
+  set_table_name 'locations'
 end
-=end
+
