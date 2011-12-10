@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:bhelx/close_enough_ocr
-  revision: 436631e4171593f709770d41e879cc0d65ed3fae
+  revision: 5d75cd564c6b0da5b6d57d98bd7d0f22d79267c6
   branch: master
   specs:
     close_enough_ocr (0.0.1)
@@ -77,6 +77,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  activesupport
   close_enough_ocr!
   geocoder
   geokit
