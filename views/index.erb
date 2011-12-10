@@ -18,7 +18,7 @@
     <script id="infoTemplate" type="text/template">
       <ul class="tabs" data-tabs="tabs">
         <li class="active"><a href="#event">Event</a></li>
-        <li><a href="#event-location">@ <%= name %></a></li>
+        <li><a href="#event-location">@  {{ name }}</a></li>
       </ul>
 
       <div class="pill-content">
@@ -154,6 +154,10 @@
 
     <script>
       $(document).ready(function() {
+        _.templateSettings = {
+          interpolate : /\{\{(.+?)\}\}/g
+        };
+        
         $('#post-img-modal').modal({
           keyboard: true,
           backdrop: true
