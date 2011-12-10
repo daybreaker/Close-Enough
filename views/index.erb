@@ -9,7 +9,7 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDCEhOTsxuuXVPsHbA4rPofhK1azdoF7-M&sensor=true"></script>
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-
+    
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding-top: 40px }
@@ -23,7 +23,7 @@
 
       <div class="pill-content">
         <div class="active" id="event">
-          <img src="public/images/halloween.jpg" />
+          <img src="halloween.jpg" />
         </div>
         <div id="event-location">Location Info</div>
       </div>
@@ -103,7 +103,7 @@
         geocoder = new google.maps.Geocoder();
         var latlng = new google.maps.LatLng(29.9355743, -90.08161630000001);
         var myOptions = {
-          zoom: 13,
+          zoom: 15,
           center: latlng,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -158,6 +158,12 @@
           keyboard: true,
           backdrop: true
         });
+        $('#zoom-out-btn').click(function() {
+          map.setZoom(13);
+        });
+        $('#zoom-in-btn').click(function() {
+          map.setZoom(15);
+        });
       });
     </script>
       
@@ -169,7 +175,15 @@
         <div class="topbar-inner">
           <div class="container">
             <h2><a href="#"><strong>CLOSE // <span style="color:red;">ENOUGH</span></strong></a></h2>
-            <div class="nav secondary-nav">
+            <ul class="nav">
+              <li class="active">
+                <a href="#" id="zoom-out-btn">Neighborhood View</a>
+              </li>
+              <li>
+                <a href="#" id="zoom-in-btn">Street View</a>
+              </li>
+            </ul>
+            <div class="secondary-nav nav">
               <a class="btn primary large" data-controls-modal="post-img-modal" data-backdrop="static">Post Event</a>
             </div>
           </div>
@@ -204,4 +218,4 @@
 
 
 
-
+    
