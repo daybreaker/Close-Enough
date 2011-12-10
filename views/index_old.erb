@@ -1,0 +1,4 @@
+<% @locations.uniq(&:gid).sort_by(&:name).each do |x| %>
+<%= x.name %>
+<br />
+<% end %>
