@@ -1,4 +1,160 @@
-<% @locations.uniq(&:gid).sort_by(&:name).each do |x| %>
-<%= x.name %>
-<br />
-<% end %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+    <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src="bootstrap-modal.js"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDCEhOTsxuuXVPsHbA4rPofhK1azdoF7-M&sensor=true"></script>
+
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding-top: 40px }
+    </style>
+
+    <script type="text/javascript">
+
+      var geocoder;
+      var map;
+      var marker;
+
+      var contentString = 
+      '<div id="content">' +
+      '<img src="halloween.jpg" />' +
+      '</div>';
+
+      var infowindow = new google.maps.InfoWindow({
+          content: contentString
+      });
+
+      function codeAddress() {
+        geocoder.geocode( { 'address': '2023 Coliseum St., New Orleans LA. 70130'}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+                marker = new google.maps.Marker({
+                map: map,
+                animation: google.maps.Animation.DROP,
+                position: results[0].geometry.location
+            });
+            //google.maps.event.addListener(marker, 'click', toggleBounce);
+            google.maps.event.addListener(marker, 'click', function() {
+              infowindow.open(map,marker);
+            });
+          } else {
+            alert("Geocode was not successful for the following reason: " + status);
+          }
+        });
+      }
+
+      function handleNoGeolocation(errorFlag) {
+        if (errorFlag == true) {
+          alert("Geolocation service failed.");
+        } else {
+          alert("Your browser doesn't support geolocation. We've placed you in Siberia.");
+        }
+        map.setCenter(initialLocation);
+      }
+
+      function initialize() {
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(29.9355743, -90.08161630000001);
+        var myOptions = {
+          zoom: 13,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+        // Try W3C Geolocation (Preferred)
+        if(navigator.geolocation) {
+          browserSupportFlag = true;
+          navigator.geolocation.getCurrentPosition(function(position) {
+            initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
+            map.setCenter(initialLocation);
+            console.log(initialLocation);
+          }, function() {
+            handleNoGeolocation(browserSupportFlag);
+          });
+        // Try Google Gears Geolocation
+        } else if (google.gears) {
+          browserSupportFlag = true;
+          var geo = google.gears.factory.create('beta.geolocation');
+          geo.getCurrentPosition(function(position) {
+            initialLocation = new google.maps.LatLng(position.latitude,position.longitude);
+            map.setCenter(initialLocation);
+          }, function() {
+            handleNoGeoLocation(browserSupportFlag);
+          });
+        // Browser doesn't support Geolocation
+        } else {
+          browserSupportFlag = false;
+          handleNoGeolocation(browserSupportFlag);
+        }
+
+        codeAddress();
+
+      }
+
+      function toggleBounce() {
+
+        if (marker.getAnimation() != null) {
+          marker.setAnimation(null);
+        } else {
+          marker.setAnimation(google.maps.Animation.BOUNCE);
+        }
+      }
+      
+    </script>
+
+    <script>
+      $(document).ready(function() {
+        $('#post-img-modal').modal({
+          keyboard: true,
+          backdrop: true
+        });
+      });
+    </script>
+      
+  </head>
+  <body onload="initialize()">
+
+    <div class="topbar-wrapper" style="z-index:5;">
+      <div class="topbar" data-dropdown="dropdown">
+        <div class="topbar-inner">
+          <div class="container">
+            <h2><a href="#"><strong>CLOSE // <span style="color:red;">ENOUGH</span></strong></a></h2>
+            <div class="nav secondary-nav">
+              <a class="btn primary large" data-controls-modal="post-img-modal" data-backdrop="static">Post Event</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="span12">
+      </div>
+    </div>
+    <div id="map_canvas" style="width:100%; height:100%"></div>
+
+    <div id="post-img-modal" class="modal hide fade">
+      <div class="modal-header">
+        <a href="#" class="close">&times;</a>
+        <h3>Almost there...</h3>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn large primary">Post</a>
+        <div class="input">
+          <form method="post" action="" enctype="multipart/form-data" name="imgUploadFrm">
+            <input class="input-file" id="fileInput" name="fileInput" type="file">
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+
