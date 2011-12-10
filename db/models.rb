@@ -4,7 +4,8 @@ ActiveRecord::Base.establish_connection(
   :username => 'postgres',
   :password => 'postgres',
   :database => 'close_enough',
-  :encoding => 'utf8'
+  :encoding => 'utf8',
+  :pool => 30
 )
 
 
