@@ -164,6 +164,20 @@
         $('#zoom-in-btn').click(function() {
           map.setZoom(15);
         });
+
+        // kick off ajax request for locations
+        $.ajax({
+          type: "GET",
+          url: "locations.json",
+          dataType: "json", 
+          success: function(data) {
+            console.log(data);
+          },
+          error: function(data) {
+            alert("server error :(");
+          }
+        });
+        
       });
     </script>
       
