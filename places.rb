@@ -7,7 +7,6 @@ class GooglePlaceGridSearch
   end
   
   def grid(steps)
-    l = []
     (@bottom..@top).step( (@top - @bottom) / steps ) do |lat|
       (@left..@right).step( (@right - @left) / steps ) do |long|
         places = @client.spots(lat, long, :types => @main_types )
