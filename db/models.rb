@@ -49,7 +49,7 @@ class Event < ActiveRecord::Base
     when Symbol
       case measure
       when :today
-        end_dt = Time.now.at_midnight + 2.hours
+        end_dt = Time.now.at_midnight + 1.day + 2.hours
       end
     when Integer
       end_dt = Time.now + measure.send(unit)
