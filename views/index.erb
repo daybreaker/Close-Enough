@@ -25,7 +25,7 @@
 
       <div class="pill-content">
         <div class="active" id="event">
-          <img src="images/halloween.jpg" />
+          <img src= {{ flyer_img }} />
         </div>
         <div id="event-location">Location Info</div>
       </div>
@@ -66,9 +66,9 @@
         });
       }
 
-      function attachInfoWindow(marker, loc) {
+      function attachInfoWindow(marker, evt) {
         var infowindow = new google.maps.InfoWindow(
-            { content: _.template($('#infoTemplate').html())(loc)
+            { content: _.template($('#infoTemplate').html())( { name: evt.location.name, flyer_img: evt.flyer.thumb.url })
         });
 
         // when window is closed return to our previous position
@@ -142,6 +142,15 @@
 
       // ajax request for events given a date
       function reqEventsByDate() {
+
+        // clear any existing event markers
+        $(markers).each(function () {
+          this.set_map(null);
+        });
+
+        // reset the eviction array 
+        markers = [];
+
         // kick off ajax request for locations
         $.ajax({
           type: "GET",
@@ -154,7 +163,7 @@
 
             _.each(data, function(evnt) { 
                markers.push( setLocMarker(evnt.event.location));
-               attachInfoWindow(_.last(markers), evnt.event.location);
+               attachInfoWindow(_.last(markers), evnt.event);
             });
           },
           error: function(data) {
@@ -171,7 +180,6 @@
         _.templateSettings = {
           interpolate : /\{\{(.+?)\}\}/g
         };
-
         $('#post-img-modal').modal({
           keyboard: true,
           backdrop: true
