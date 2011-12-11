@@ -1,7 +1,7 @@
 class AddFieldsToLocations < ActiveRecord::Migration
   def self.up
     add_column :events, :band_name, :string
-    add_column :events :location_id, :integer
+    add_column :events, :location_id, :integer
 
   end
 
