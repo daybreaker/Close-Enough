@@ -35,7 +35,9 @@ post '/events/new' do
 
   @event = Event.new
   @event.flyer = params[:flyer_img]
+  @event.flyer.store!
+  @event.location = CloseEnough::Ocr.locations_from_image(@event.flyer.current_path).first
 
-  @event.save!
+  @event.save
   erb :event
 end
