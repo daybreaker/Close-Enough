@@ -1,45 +1,90 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+            "http://www.w3.org/TR/html4/loose.dtd">
 <html>
   <head>
-    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
-    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js' type='text/javascript'></script>
     <script language="javascript" type="text/javascript" src="javascript/underscore-min.js"></script>
     <script language="javascript" type="text/javascript" src="javascript/bootstrap-modal.js"></script>
+    <script language="javascript" type="text/javascript" src="javascript/spin.min.js"></script>
     <script language="javascript" type="text/javascript" src="javascript/bootstrap-tabs.js"></script>
-    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDCEhOTsxuuXVPsHbA4rPofhK1azdoF7-M&sensor=true"></script>
 
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-  </head>
-  <body>
-    <img src="<%= @event.flyer.thumb.url %>" style="float:left; margin-right:20px" />
-    <form action="/events/update/<%= @event.id %>"  enctype="multipart/form-data" method="post">
-      <label for "band_name">Band Name:</label><br />
-      <input type="text" name="band_name" id = "band_name" /><br />
-      <br /><br />
-      <label for="location_name">Suggested Location:</label><br />
-      <input name="location_name" id= "location_name" type="text" value="<%= @event.location.name %>" /><br />
-      <input name="location_id" id="location_id" type="hidden" value="<%= @event.location.id %>" /><br />
-      (* You can change the location by starting to type in the text box and selecting a new location)
-      <br /><br />
-      <label for = "start" >Date</label><br />
-      <input type="text" class="datepicker" id="start" name="start" />
-      <br /><br />
-      <input type="submit" />
-      <script type="text/javascript">
-      
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript">
       $(document).ready(function(){
         
-        $('#location_name').autocomplete({
-			    source: "/locations.json",
-			    minLength: 2,  
-			    select: function (event, ui){
-			      $("#location_id").val(ui.item.id);
-			    }
-			  });
+        $('#location-name').autocomplete({
+          source: "/locations.json",
+          minLength: 2,  
+          select: function (event, ui){
+            $("#location_id").val(ui.item.id);
+          }
+        });
       });
-      
-      </script>
+    </script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" >
+
+    <style type="text/css">
+      html { height: 100%;}
+      body { 
+        height: 100%;
+        background-color: black;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+  <div class="container" style="color:white;">
+    <div class="row">
+      <h1 style="font-size: 2em;">A little closer...</h1>
+      <div class="span8">
+        <form method="POST" action="event/update/<%= @event.id %>">
+          <div id="suggested-location" style="padding: 15px;">
+            <h2>we think this is your location.</h2>
+            <h2>we're probably wrong.</h2>
+            <h3><%= @event.location.name %></h3>
+            <input name="location_id" id="location_id" type="hidden" value="<%= @event.location.id %>" /><br />
+          </div>
+          
+          <div id="autocomplete-location" class="form-stacked" >
+            <div class="clearfix">
+              <label for="location-name">Where?</label>
+              <div class="input">
+                <input name="location_name" id="location-name" class="xlarge" size="30" type="text" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-stacked">
+            <div class="clearfix">
+              <label for="band-name">What?</label>
+              <div class="input">
+                <input name="event[band_name]" id="band-name" class="date xlarge" size="30" />
+              </div>
+            </div>
+
+            <div class="clearfix">
+              <label for="start-time-hours">When?</label>
+              <div class="input">
+                <div class="inline-inputs">
+                  <input name="event[start_date]" id="start-date" class="date large" size="30" />
+                  <input name="event[start_time]" id="start-time" class="mini" value="12:00pm" size="30"/>
+                </div>
+              </div>
+            </div>
+
+            <div class="actions" style="background-color: black">
+              <button class="btn large success submit primary">CLOSE ENOUGH</button>
+              <a class="btn large nope" style="margin-left: 5px;">nope.</a>
+            </div>
+            </div>
+        </form>
+      </div>
+        
+      <div class="span4" style="padding: 10px;">
+          <img src="<%= @event.flyer.thumb.url %>" />
+      </div>
+  </div>
   </body>
 </html>
