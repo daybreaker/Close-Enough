@@ -2,7 +2,10 @@
   <body>
     <img src="<%= @event.flyer.url %>" />
     <br/>
+    <%= @event.flyer.current_path %>
+    <br/>
     <%= @event.to_s %>
+    <%= @event.location.name %>
     <br/>
     <%= @post_data.to_s %>
   </body>

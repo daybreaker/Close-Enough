@@ -17,10 +17,14 @@ ActiveRecord::Base.establish_connection(
 
 class Location < ActiveRecord::Base 
   set_table_name 'locations'
+
+  has_many :events
 end
 
 class Event < ActiveRecord::Base
   set_table_name 'events'
+
+  belongs_to :location
   mount_uploader :flyer, FlyerUploader
 
   before_create :set_date
