@@ -218,6 +218,7 @@
         });
 
         $('form .btn').click(function() {
+          $('#post-evt-modal').modal('show');
           $(this).parents('form').submit();
         });
 
@@ -235,8 +236,10 @@
           shadow: true // Whether to render a shadow
         };
 
-        var target  = document.getElementById('spin-body');
-        var spinner = new Spinner(spin_opts).spin(target);
+        var target_1  = document.getElementById('spin-body-search');
+        var target_2  = document.getElementById('spin-body-post');
+        var spinner_1 = new Spinner(spin_opts).spin(target_1);
+        var spinner_2 = new Spinner(spin_opts).spin(target_2);
 
       });
     </script>
@@ -274,7 +277,7 @@
       <div class="modal-body">
         <h5>
           CloseEnough makes it simple and fun to <strong>view</strong> and <strong>share</strong> events that are happening near you.
-          Post an image of an event flyer from your phone or computer now! 
+          Submit an event flyer now by posting an image rom your phone or computer! 
         </h5>
       </div>
       <div class="modal-footer">
@@ -290,7 +293,15 @@
     <div id="search-evt-modal" class="modal hide fade">
       <a href="#" class="close"></a>
       <div class="modal-header"><h6>Please hang on while we find great events in your location!</h6></div>
-      <div id="spin-body" class="modal-body" style="height: 100px;"></div>
+      <div id="spin-body-search" class="modal-body" style="height: 100px;"></div>
+      <div class="modal-footer">
+      </div>
+    </div>
+
+    <div id="post-evt-modal" class="modal hide fade">
+      <a href="#" class="close"></a>
+      <div class="modal-header"><h6>Please hang on while we process your flyer</h6></div>
+      <div id="spin-body-post" class="modal-body" style="height: 100px;"></div>
       <div class="modal-footer">
       </div>
     </div>
