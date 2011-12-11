@@ -10,7 +10,7 @@ require_relative 'db/models'
 require_relative 'db/load_locations'
 
 configure do 
-  set :public_folder, File.dirname(__FILE__) + '/public'
+  set :public_folder, File.dirname(__FILE__) + '/static'
 end
 
 get '/' do
