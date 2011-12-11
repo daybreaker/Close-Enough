@@ -178,7 +178,7 @@
           error: function(data) {
             alert("server error :(");
           }
-          
+        }); 
         $('form .btn').click(function() {
           var form = $(this).parents('form');
           $.post(form.attr('action'), form.serialize(), function (data) {
