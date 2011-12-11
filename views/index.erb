@@ -200,6 +200,10 @@
         $('#datepicker').datepicker({
            onSelect: function(dateText, inst) { reqEventsByDate(); }
         });
+        $('#today').click(function() {
+          $('#datepicker').datepicker("setDate", new Date());
+          reqEventsByDate();
+        });
         $('#tomorrow').click(function() {
           $('#datepicker').datepicker("setDate", new Date(Date.now() + 86400000));
           reqEventsByDate();
