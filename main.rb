@@ -24,8 +24,7 @@ configure :development do
 end
 
 
-get '/:date?/?:id?' do
-
+get '/' do
   @date = params[:date].to_date unless params[:date].nil? || params[:date].empty?
   @event = Event.find(params[:id]) if params[:id]
   # Run tail -f logs/output.log to follow live logging
@@ -65,9 +64,9 @@ post '/events/update/:id' do
   
   @event.location = Location.find(params[:location_id]) if @event.location_id != params[:location_id]
   @event.band_name = params[:band_name]
-  @event.start = params[:start] ? params[:start] : Date.today.strftime('%Y-%m-%d')
+  @event.start = params[:start] ? params[:start] : Date.today
   
   @event.save
-  redirect "/#{@event.start}/#{@event.id}"
+  redirect "/?date=#{@event.start.strftime('%Y-%m-%d')}&id=#{@event.id}"
 end
 
