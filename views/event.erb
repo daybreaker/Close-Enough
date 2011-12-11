@@ -1,12 +1,19 @@
 <html>
   <body>
-    <img src="<%= @event.flyer.url %>" />
-    <br/>
-    <%= @event.flyer.current_path %>
-    <br/>
-    <%= @event.to_s %>
-    <%= @event.location.name %>
-    <br/>
-    <%= @post_data.to_s %>
+    <img src="<%= @event.flyer.thumb.url %>" style="float:left; margin-right:20px" />
+    <form action="/events/update"  enctype="multipart/form-data" method="post">
+      <input type="hidden" name="event_id" value="<%= @event.id %>" />
+      <label for "band_name">Band Name:</label><br />
+      <input type="text" name="band_name" id = "band_name" /><br />
+      <br /><br />
+      <label for="location_name">Suggested Location:</label><br />
+      <input name="location_name" id= "location_name" type="text" value="<%= @event.location.name %>" /><br />
+      <input name="location_id" id="location_id" type="hidden" value="<%= @event.location.id %>" /><br />
+      (* You can change the location by starting to type in the text box and selecting a new location)
+      <br /><br />
+      <label for = "start" >Date</label><br />
+      <input type="text" class="datepicker" id="start" name="start" />
+      <br /><br />
+      <input type="submit" />
   </body>
 </html>
