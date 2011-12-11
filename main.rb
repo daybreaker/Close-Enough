@@ -19,6 +19,11 @@ get '/locations.json' do
   Location.all.to_json
 end
 
+post '/locations.json' do
+  incomplete_text = params[:q]
+  Location.find_by_sql "SELECT * from locations where name ilike '%#{incomplete_text}%';"
+end
+
 post '/flyers/new' do
   content_type :json
   event = Event.new
@@ -41,3 +46,4 @@ post '/events/new' do
   @event.save
   erb :event
 end
+
