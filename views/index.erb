@@ -10,7 +10,7 @@
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDCEhOTsxuuXVPsHbA4rPofhK1azdoF7-M&sensor=true"></script>
 
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-    
+
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding-top: 40px }
@@ -19,7 +19,7 @@
     <script id="infoTemplate" type="text/template">
       <ul class="tabs" data-tabs="tabs">
         <li class="active"><a href="#event">Event</a></li>
-        <li><a href="#event-location">@  {{ name }}</a></li>
+        <li><a href="#event-location">@ {{ name }} </a></li>
       </ul>
 
       <div class="pill-content">
@@ -105,7 +105,7 @@
         geocoder = new google.maps.Geocoder();
         var latlng = new google.maps.LatLng(29.9355743, -90.08161630000001);
         var myOptions = {
-          zoom: 15,
+          zoom: 13,
           center: latlng,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         };
@@ -156,19 +156,9 @@
 
     <script>
       $(document).ready(function() {
-        _.templateSettings = {
-          interpolate : /\{\{(.+?)\}\}/g
-        };
-        
         $('#post-img-modal').modal({
           keyboard: true,
           backdrop: true
-        });
-        $('#zoom-out-btn').click(function() {
-          map.setZoom(13);
-        });
-        $('#zoom-in-btn').click(function() {
-          map.setZoom(15);
         });
 
         // kick off ajax request for locations
@@ -188,8 +178,13 @@
           error: function(data) {
             alert("server error :(");
           }
+          
+        $('form .btn').click(function() {
+          var form = $(this).parents('form');
+          $.post(form.attr('action'), form.serialize(), function (data) {
+            alert('200 OK');
+          });
         });
-        
       });
     </script>
       
@@ -201,15 +196,7 @@
         <div class="topbar-inner">
           <div class="container">
             <h2><a href="#"><strong>CLOSE // <span style="color:red;">ENOUGH</span></strong></a></h2>
-            <ul class="nav">
-              <li class="active">
-                <a href="#" id="zoom-out-btn">Neighborhood View</a>
-              </li>
-              <li>
-                <a href="#" id="zoom-in-btn">Street View</a>
-              </li>
-            </ul>
-            <div class="secondary-nav nav">
+            <div class="nav secondary-nav">
               <a class="btn primary large" data-controls-modal="post-img-modal" data-backdrop="static">Post Event</a>
             </div>
           </div>
@@ -231,10 +218,10 @@
       <div class="modal-body">
       </div>
       <div class="modal-footer">
-        <a href="#" class="btn large primary">Post</a>
         <div class="input">
-          <form method="post" action="" enctype="multipart/form-data" name="imgUploadFrm">
-            <input class="input-file" id="fileInput" name="fileInput" type="file">
+          <form method="post" action="locations/new" enctype="multipart/form-data" name="imgUploadFrm">
+            <input class="input-file" id="fileInput" name="event[flyer]" type="file">
+            <a href="#" class="btn large primary">Post</a>
           </form>
         </div>
       </div>
@@ -244,4 +231,4 @@
 
 
 
-    
+
