@@ -6,9 +6,9 @@ require 'active_support'
 require 'pg'
 require 'uri'
 
+require_relative 'lib/fuzzy'
 require_relative 'db/models'
 require_relative 'db/load_ocr'
-require_relative 'lib/fuzzy'
 
 get '/' do
   erb :index
