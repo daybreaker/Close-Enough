@@ -25,17 +25,6 @@ post '/locations.json' do
   Location.find_by_sql("SELECT * from locations where digested_name ilike '%#{incomplete_text}%';").to_json
 end
 
-post '/flyers/new' do
-  content_type :json
-  event = Event.new
-  event.flyer = params[:flyer_img][:tempfile]
-  if event.save!
-    { :response => 'SUCCESS', :img_url => event.flyer.url }.to_json 
-  else
-    { :response => 'FAIL', :message => "unable to save event" }.to_json
-  end
-end
-
 post '/events/new' do 
   @post_data = params
 
@@ -44,8 +33,19 @@ post '/events/new' do
   
   @event.flyer.store!
   @event.location = CloseEnough::Ocr.locations_from_image(@event.flyer.current_path).first
-
+  
   @event.save
   erb :event
+end
+
+post '/events/update' do
+  @event = Event.find(params[:event_id])
+  
+  @event.location = Location.find(params[:location_id]) if @event.location_id != params[:location_id]
+  @event.band_name = params[:band_name]
+  @event.start = params[:start]
+  
+  @event.save
+  redirect '/'
 end
 

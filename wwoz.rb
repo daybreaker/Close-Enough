@@ -1,6 +1,5 @@
 require 'open-uri'
 require 'nokogiri'
-require 'pry'
 require_relative 'config'
 
 class WWOZLivewire
@@ -28,16 +27,18 @@ class WWOZLivewire
 	      venues.each do |venue|
 	      #puts venue.text + "\n"
 	        begin
-	          vurl = 'http://www.wwoz.org' + venue.attributes['href'].value
-	          venue_details_html = Nokogiri::HTML(open(vurl)).css('div.node')
-	          status = venue_details_html.css('.venue-status').text.downcase.include?("open") ? 'open' : 'closed'
-	          address = venue_details_html.css('.street-address').text + " " + venue_details_html.css('.locality').text + ', ' +  venue_details_html.css('.region').text
-	          map_matches = /q=(.*?)\+(.*?)\+/.match (venue_details_html.css('.location.map-link a').select{|x| x.text == "Google Maps" }.first.attributes['href'].value)
-	          lat, long = map_matches[1..2]
+	          unless Location.find_by_name(venue.text.strip)	
+	          
+	            vurl = 'http://www.wwoz.org' + venue.attributes['href'].value
+	            venue_details_html = Nokogiri::HTML(open(vurl)).css('div.node')
+	            status = venue_details_html.css('.venue-status').text.downcase.include?("open") ? 'open' : 'closed'
+	            address = venue_details_html.css('.street-address').text + " " + venue_details_html.css('.locality').text + ', ' +  venue_details_html.css('.region').text
+	            map_matches = /q=(.*?)\+(.*?)\+/.match (venue_details_html.css('.location.map-link a').select{|x| x.text == "Google Maps" }.first.attributes['href'].value)
+	            lat, long = map_matches[1..2]
 		
-          	#places = @client.spots(lat, long, :name => venue.text )
+            	#places = @client.spots(lat, long, :name => venue.text )
 	
-            unless Location.find_by_name(venue.text.strip)	
+            
 	            l = Location.new({
 	              :vicinity => address,
 	              :lat => lat,
@@ -54,7 +55,7 @@ class WWOZLivewire
             end
             sleep rand*2
           rescue Exception => e
-            puts "#{venue} failed"
+            puts "#{venue.text} failed"
           end #end begin ... rescue     
         end #end venues.each
       end #end threads << Thread.do
