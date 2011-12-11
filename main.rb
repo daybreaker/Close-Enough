@@ -11,7 +11,26 @@ require_relative 'lib/fuzzy'
 require_relative 'db/models'
 require_relative 'db/load_ocr'
 
-get '/' do
+set :logging, true
+require 'logger'
+Dir.mkdir('logs') unless File.exist?('logs')
+$log = Logger.new('logs/output.log','weekly')
+
+configure :production do
+  $log.level = Logger::WARN
+end
+configure :development do
+  $log.level = Logger::DEBUG
+end
+
+
+get '/:date?/?:id?' do
+
+  @date = params[:date].to_date unless params[:date].nil? || params[:date].empty?
+  @event = Event.find(params[:id]) if params[:id]
+  # Run tail -f logs/output.log to follow live logging
+  $log.debug @date
+  $log.debug @event
   erb :index
 end
 
@@ -46,9 +65,9 @@ post '/events/update/:id' do
   
   @event.location = Location.find(params[:location_id]) if @event.location_id != params[:location_id]
   @event.band_name = params[:band_name]
-  @event.start = params[:start]
+  @event.start = params[:start] ? params[:start] : Date.today.strftime('%Y-%m-%d')
   
   @event.save
-  redirect '/'
+  redirect "/#{@event.start}/#{@event.id}"
 end
 
