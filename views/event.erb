@@ -21,6 +21,8 @@
             $("#location_id").val(ui.item.id);
           }
         });
+
+        $('.date').datepicker();
       });
     </script>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" >
@@ -60,7 +62,7 @@
             <div class="clearfix">
               <label for="band-name" style="color:white;">What?</label>
               <div class="input">
-                <input name="event[band_name]" id="band-name" class="date xlarge" size="30" />
+                <input name="event[band_name]" id="band-name" class="xlarge" size="30" />
               </div>
             </div>
 
@@ -76,7 +78,6 @@
 
             <div class="actions" style="background-color: black">
               <button class="btn large success submit primary">CLOSE ENOUGH</button>
-              <a class="btn large nope" style="margin-left: 5px;">nope.</a>
             </div>
             </div>
         </form>
