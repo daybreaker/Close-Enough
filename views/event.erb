@@ -1,8 +1,11 @@
 <html>
+  <head>
+    <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script language="javascript" type="text/javascript" src=" https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+  </head>
   <body>
     <img src="<%= @event.flyer.thumb.url %>" style="float:left; margin-right:20px" />
-    <form action="/events/update"  enctype="multipart/form-data" method="post">
-      <input type="hidden" name="event_id" value="<%= @event.id %>" />
+    <form action="/events/update/<%= @event.id %>"  enctype="multipart/form-data" method="post">
       <label for "band_name">Band Name:</label><br />
       <input type="text" name="band_name" id = "band_name" /><br />
       <br /><br />
@@ -15,5 +18,19 @@
       <input type="text" class="datepicker" id="start" name="start" />
       <br /><br />
       <input type="submit" />
+      <script type="text/javascript">
+      
+      $(document).ready(function(){
+        
+        $('#location_name').autocomplete({
+			    source: "/locations.json",
+			    minLength: 2,  
+			    select: function (event, ui){
+			      $("#location_id").val(ui.item.id);
+			    }
+			  });
+      });
+      
+      </script>
   </body>
 </html>

@@ -20,10 +20,10 @@ get '/events.json' do
   params[:startdate]
 end
 
-post '/locations.json' do
+get '/locations.json' do
   content_type :json
-  incomplete_text = CloseEnough::Fuzzy.digest(params[:q])
-  Location.find_by_sql("SELECT * from locations where digested_name ilike '%#{incomplete_text}%';").to_json
+  incomplete_text = CloseEnough::Fuzzy.digest(params[:term])
+  Location.find_by_sql("SELECT * from locations where digested_name ilike '%#{incomplete_text}%';").map{ |x| {:id => x.id, :label => x.name , :value => x.name } }.to_json
 end
 
 post '/events/new' do 
@@ -39,8 +39,9 @@ post '/events/new' do
   erb :event
 end
 
-post '/events/update' do
-  @event = Event.find(params[:event_id])
+
+post '/events/update/:id' do
+  @event = Event.find(params[:id])
   
   @event.location = Location.find(params[:location_id]) if @event.location_id != params[:location_id]
   @event.band_name = params[:band_name]
