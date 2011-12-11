@@ -1,2 +1,4 @@
 api_keys.rb
 *.swp
+*.swo
+public/uploads/*
