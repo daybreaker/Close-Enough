@@ -34,6 +34,7 @@
       var geocoder;
       var map;
       var markers = [];
+      var testData;
 
       var test_locations = 
       { 
@@ -176,7 +177,7 @@
           dataType: "json", 
           success: function(data) {
             console.log('success');
-            var foo = data
+            testData = data;
           },
           error: function(data) {
             alert("server error :(");
