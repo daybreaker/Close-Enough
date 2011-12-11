@@ -7,7 +7,7 @@ require 'pg'
 require 'uri'
 
 require_relative 'db/models'
-require_relative 'db/load_locations'
+require_relative 'db/load_ocr'
 
 get '/' do
   @locations = Location.all
