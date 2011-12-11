@@ -2,7 +2,11 @@ require 'carrierwave'
 require 'carrierwave/orm/activerecord'
 
 class FlyerUploader < CarrierWave::Uploader::Base
-  storage :file
+  include CarrierWave::RMagick
+  storage :file 
+  version :thumb do
+    process :resize_to_fit => [640,480]
+  end
 end
 
 ActiveRecord::Base.establish_connection(
