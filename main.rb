@@ -16,8 +16,8 @@ end
 
 get '/events.json' do
   content_type :json
-  #Event.future(:tonight).to_json(:include => :location)
-  params[:startdate]
+  sdate = DateTime.parse(params[:sdate])
+  Event.future(sdate).to_json(:include => :location)
 end
 
 get '/locations.json' do

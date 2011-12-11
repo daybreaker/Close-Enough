@@ -146,7 +146,7 @@
         $.ajax({
           type: "GET",
           url: "events.json",
-          data: { "startdate": $('#datepicker').datepicker('getDate') }, 
+          data: { "sdate": $.param( $('#datepicker').datepicker('getDate').toString('yyyy-MM-dd') ) },
           dataType: "json", 
           success: function(data) {
             console.log('success');

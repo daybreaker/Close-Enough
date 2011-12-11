@@ -42,21 +42,25 @@ class Event < ActiveRecord::Base
   # example:
   #    Event.future 3, :days
   #    Event.future 6, :hours
-  #    Event.future :tonight
+  #    Event.future :today
   def self.future(measure, unit=nil)
-    end_dt = Time.now + 1.day
+    start_dt = Time.now
+    end_dt   = Time.now + 1.day
 
     case measure
     when Symbol
       case measure
-      when :tongiht
+      when :today
         end_dt = Time.now.at_midnight + 2.hours
       end
     when Integer
       end_dt = Time.now + measure.send(unit)
+    when DateTime
+      start_dt = measure
+      end_dt   = measure.at_midnight + 2.hours
     end
 
-    self.starts_between(Time.now, end_dt)
+    self.starts_between(start_dt, end_dt)
   end
 
   def self.starts_between(dt1, dt2)
