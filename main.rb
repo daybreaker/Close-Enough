@@ -5,6 +5,7 @@ require 'active_record'
 require 'active_support'
 require 'pg'
 require 'uri'
+require 'date'
 
 require_relative 'lib/fuzzy'
 require_relative 'db/models'

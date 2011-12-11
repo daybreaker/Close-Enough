@@ -57,7 +57,7 @@ class Event < ActiveRecord::Base
       end_dt = Time.now + measure.send(unit)
     when DateTime
       start_dt = measure
-      end_dt   = measure.at_midnight + 2.hours
+      end_dt   = (measure + 1.day).at_midnight + 2.hours
     end
 
     self.starts_between(start_dt, end_dt)
