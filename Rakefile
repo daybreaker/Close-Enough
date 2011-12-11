@@ -36,7 +36,7 @@ namespace :util do
   task :import_locations do
     File.open("locations.json", 'r') do |f|
       locs = ActiveSupport::JSON.decode(f.read)
-      locs.map { |l| Location.new(l).save }
+      locs.map { |l| Location.new(l['location']).save }
     end
   end
 
