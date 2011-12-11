@@ -175,7 +175,8 @@
           url: "locations.json",
           dataType: "json", 
           success: function(data) {
-            console.log(data.typeof)
+            console.log('success');
+            var foo = data
           },
           error: function(data) {
             alert("server error :(");
