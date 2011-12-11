@@ -164,7 +164,7 @@
             console.log('success');
             testData = data;
 
-            $('#search-evt-modal').modal('toggle');
+            $('#search-evt-modal').modal('hide');
 
             _.each(data, function(evnt) { 
                markers.push( setLocMarker(evnt.event.location));
@@ -222,7 +222,6 @@
         });
 
         $('#search-evt-modal').modal( {backdrop: 'static'});
-        //$('#search-evt-modal').modal('toggle');
 
         // set the search spinner
         var spin_opts = {
