@@ -64,7 +64,8 @@ post '/events/update/:id' do
   
   @event.location = Location.find(params[:location_id]) if @event.location_id != params[:location_id]
   @event.band_name = params[:band_name]
-  @event.start = params[:start] ? params[:start] : Date.today
+  params[:start_time] ||= ''
+  @event.start = params[:start_date] ? params[:start_date] + ' ' + params[:start_time] : Time.now
   
   @event.save
   redirect "/?date=#{@event.start.strftime('%Y-%m-%d')}&id=#{@event.id}"
