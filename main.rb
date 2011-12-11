@@ -27,9 +27,6 @@ end
 get '/' do
   @date = params[:date].to_date unless params[:date].nil? || params[:date].empty?
   @event = Event.find(params[:id]) if params[:id]
-  # Run tail -f logs/output.log to follow live logging
-  $log.debug @date
-  $log.debug @event
   erb :index
 end
 
@@ -52,6 +49,8 @@ post '/events/new' do
   @event.flyer = params[:flyer_img]
   
   @event.flyer.store!
+  
+  $log.debug @event.flyer
   @event.location = CloseEnough::Ocr.locations_from_image(@event.flyer.current_path).first
   
   @event.save
