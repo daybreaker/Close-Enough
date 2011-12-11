@@ -81,28 +81,6 @@
         });
       }
 
-      function codeAddress() {
-        geocoder.geocode( { 'address': '2023 Coliseum St., New Orleans LA. 70130'}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-                marker = new google.maps.Marker({
-                map: map,
-                animation: google.maps.Animation.DROP,
-                position: results[0].geometry.location
-            });
-            //google.maps.event.addListener(marker, 'click', toggleBounce);
-                animation: google.maps.Animation.DROP,
-                position: results[0].geometry.location
-            });
-            //google.maps.event.addListener(marker, 'click', toggleBounce);
-            google.maps.event.addListener(marker, 'click', function() {
-              infowindow.open(map,marker);
-            });
-          } else {
-            alert("Geocode was not successful for the following reason: " + status);
-          }
-        });
-      }
-
       function handleNoGeolocation(errorFlag) {
         if (errorFlag == true) {
           alert("Geolocation service failed.");
