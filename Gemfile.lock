@@ -29,6 +29,8 @@ GEM
       multi_json (~> 1.0)
     arel (2.2.1)
     builder (3.0.0)
+    carrierwave (0.5.8)
+      activesupport (~> 3.0)
     coderay (0.9.8)
     geocoder (1.1.0)
     geokit (1.6.0)
@@ -78,6 +80,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord
   activesupport
+  carrierwave
   close_enough_ocr!
   geocoder
   geokit
