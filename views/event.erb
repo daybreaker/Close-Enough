@@ -37,35 +37,35 @@
   <body>
   <div class="container" style="color:white;">
     <div class="row">
-      <h1 style="font-size: 2em;">A little closer...</h1>
+      <h1 style="font-size: 6em; line-height: 1.5em; color:white; margin-bottom: 20px">A little closer...</h1>
       <div class="span8">
         <form method="POST" action="/events/update/<%= @event.id %>">
           <div id="suggested-location" style="padding: 15px;">
-            <h2>we think this is your location.</h2>
-            <h2>we're probably wrong.</h2>
-            <h3><%= @event.location.name %></h3>
-            <input name="location_id" id="location_id" type="hidden" value="<%= @event.location.id %>" /><br />
+            <h2 style="color: white;">we think this is your location.</h2>
+            <h2 style="color: white;">we're probably wrong.</h2>
+            <p>(you can change it, we won't be offended)</p>
           </div>
           
           <div id="autocomplete-location" class="form-stacked" >
             <div class="clearfix">
-              <label for="location-name">Where?</label>
+              <label for="location-name" style="color:white;">Where?</label>
               <div class="input">
-                <input name="location_name" id="location-name" class="xlarge" size="30" type="text" />
+                <input name="location_name" id="location-name" class="xlarge" size="30" type="text" value="<%= @event.location.name %>"/>
+                <input name="location_id" id="location_id" type="hidden" value="<%= @event.location.id %>" />
               </div>
             </div>
           </div>
 
           <div class="form-stacked">
             <div class="clearfix">
-              <label for="band-name">What?</label>
+              <label for="band-name" style="color:white;">What?</label>
               <div class="input">
                 <input name="event[band_name]" id="band-name" class="date xlarge" size="30" />
               </div>
             </div>
 
             <div class="clearfix">
-              <label for="start-time-hours">When?</label>
+              <label for="start-time-hours" style="color:white;">When?</label>
               <div class="input">
                 <div class="inline-inputs">
                   <input name="event[start_date]" id="start-date" class="date large" size="30" />
