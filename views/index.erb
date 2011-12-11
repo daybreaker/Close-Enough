@@ -142,11 +142,25 @@
 
       // ajax request for events given a date
       function reqEventsByDate() {
-        $.get('events.json', {'startdate': $('#datepicker').datepicker('getDate')}, function(data) {
-          //$('.result').html(data);
-          alert('Load was performed.');
-        });
-        alert($('#datepicker').datepicker("getDate"));
+        // kick off ajax request for locations
+        $.ajax({
+          type: "GET",
+          url: "events.json",
+          data: { "startdate": $('#datepicker').datepicker('getDate') }, 
+          dataType: "json", 
+          success: function(data) {
+            console.log('success');
+            testData = data;
+
+            _.each(data, function(evnt) { 
+               markers.push( setLocMarker(evnt.event.location));
+               attachInfoWindow(_.last(markers), evnt.event.location);
+            });
+          },
+          error: function(data) {
+            alert("server error :(");
+          }
+        }); 
       }
       
     </script>
@@ -178,33 +192,18 @@
         $('#datepicker').datepicker({
            onSelect: function(dateText, inst) { reqEventsByDate(); }
         });
+
+        // bind click event to today and trigger for default event search
         $('#today').click(function() {
           $('#datepicker').datepicker("setDate", new Date());
           reqEventsByDate();
-        });
+        }).trigger('click');
+
         $('#tomorrow').click(function() {
           $('#datepicker').datepicker("setDate", new Date(Date.now() + 86400000));
           reqEventsByDate();
         });
 
-        // kick off ajax request for locations
-        $.ajax({
-          type: "GET",
-          url: "events.json",
-          dataType: "json", 
-          success: function(data) {
-            console.log('success');
-            testData = data;
-
-            _.each(data, function(evnt) { 
-               markers.push( setLocMarker(evnt.event.location));
-               attachInfoWindow(_.last(markers), evnt.event.location);
-            });
-          },
-          error: function(data) {
-            alert("server error :(");
-          }
-        }); 
         $('form .btn').click(function() {
           $(this).parents('form').submit();
         });
