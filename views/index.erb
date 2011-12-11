@@ -2,11 +2,11 @@
 <html>
   <head>
     <link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
     <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
-    <script language="javascript" type="text/javascript" src=" https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+    <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js' type='text/javascript'></script>
     <script language="javascript" type="text/javascript" src="javascript/underscore-min.js"></script>
     <script language="javascript" type="text/javascript" src="javascript/bootstrap-modal.js"></script>
-    <script language="javascript" type="text/javascript" src="javascript/spin.min.js"></script>
     <script language="javascript" type="text/javascript" src="javascript/bootstrap-tabs.js"></script>
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDCEhOTsxuuXVPsHbA4rPofhK1azdoF7-M&sensor=true"></script>
 
@@ -81,24 +81,6 @@
         });
       }
 
-      function codeAddress() {
-        geocoder.geocode( { 'address': '2023 Coliseum St., New Orleans LA. 70130'}, function(results, status) {
-          if (status == google.maps.GeocoderStatus.OK) {
-                marker = new google.maps.Marker({
-                map: map,
-                animation: google.maps.Animation.DROP,
-                position: results[0].geometry.location
-            });
-            //google.maps.event.addListener(marker, 'click', toggleBounce);
-            google.maps.event.addListener(marker, 'click', function() {
-              infowindow.open(map,marker);
-            });
-          } else {
-            alert("Geocode was not successful for the following reason: " + status);
-          }
-        });
-      }
-
       function handleNoGeolocation(errorFlag) {
         if (errorFlag == true) {
           alert("Geolocation service failed.");
@@ -145,7 +127,6 @@
           handleNoGeolocation(browserSupportFlag);
         }
 
-        //codeAddress();
         //loadTestLocations();
 
       }
@@ -157,6 +138,15 @@
         } else {
           marker.setAnimation(google.maps.Animation.BOUNCE);
         }
+      }
+
+      // ajax request for events given a date
+      function reqEventsByDate() {
+        $.get('events.json', {'startdate': $('#datepicker').datepicker('getDate')}, function(data) {
+          //$('.result').html(data);
+          alert('Load was performed.');
+        });
+        alert($('#datepicker').datepicker("getDate"));
       }
       
     </script>
@@ -171,6 +161,30 @@
         $('#post-img-modal').modal({
           keyboard: true,
           backdrop: true
+        });
+
+        $(function() {
+          $( "#datepicker" ).datepicker();
+        });
+        $('ul > li > a').click(function() {
+          $('ul >li > a').css('color', '#bfbfbf');
+          $('#datepicker').css('border-color', 'black');
+          $(this).css('color', '#ffffff');
+        });
+        $('#datepicker').click(function() {
+          $('ul >li > a').css('color', '#bfbfbf');
+          $(this).css('border-color', '#ffffff')
+        });
+        $('#datepicker').datepicker({
+           onSelect: function(dateText, inst) { reqEventsByDate(); }
+        });
+        $('#today').click(function() {
+          $('#datepicker').datepicker("setDate", new Date());
+          reqEventsByDate();
+        });
+        $('#tomorrow').click(function() {
+          $('#datepicker').datepicker("setDate", new Date(Date.now() + 86400000));
+          reqEventsByDate();
         });
 
         // kick off ajax request for locations
@@ -193,10 +207,6 @@
         }); 
         $('form .btn').click(function() {
           $(this).parents('form').submit();
-          // $.post(form.attr('action'), form.serialize(), function (data) {
-          //  alert('200 OK');
-          //});
-
         });
       });
     </script>
@@ -204,21 +214,22 @@
   </head>
   <body onload="initialize()">
 
-    <div class="topbar" data-scrollspy="scrollspy">
-      <div class="topbar-inner">
+    <div class="topbar">
+      <div class="fill">
         <div class="container">
-          <a class="brand" href="#">CLOSE // ENOUGH</a>
+          <a class="brand" href="#"><strong>CLOSE // ENOUGH</strong></a>
           <ul class="nav">
-            <li class="active">
-              <a href="#" id="zoom-out-btn">Neighborhood View</a>
+            <li>
+              <a href="#today" id="today">TODAY</a>
             </li>
             <li>
-              <a href="#" id="zoom-in-btn">Street View</a>
+              <a href="#tomorrow" id="tomorrow">TOMORROW</a>
             </li>
           </ul>
           <div class="secondary-nav nav">
             <a class="btn primary large" data-controls-modal="post-img-modal" data-backdrop="static">Post Event</a>
           </div>
+          <p><input type="text" id="datepicker"></p>
         </div>
       </div>
     </div>
