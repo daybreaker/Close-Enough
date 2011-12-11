@@ -19,15 +19,23 @@ get '/locations.json' do
   Location.all.to_json
 end
 
-post '/locations/new' do
+post '/flyers/new' do
   content_type :json
   event = Event.new
-# event.flyer = params[:event][:flyer]
+  event.flyer = params[:flyer_img][:tempfile]
   if event.save!
-    params.to_json
-# { :response => "SUCCESS", :img_url => event.flyer.url }.to_json
+    { :response => 'SUCCESS', :img_url => event.flyer.url }.to_json 
   else
-    { :response => "FAIL", :message => 'failed to save event' }.to_json
+    { :response => 'FAIL', :message => "unable to save event" }.to_json
   end
+end
 
+post '/events/new' do 
+  @post_data = params
+
+  @event = Event.new
+  @event.flyer = params[:flyer_img]
+
+  @event.save!
+  erb :event
 end

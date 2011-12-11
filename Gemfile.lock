@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:bhelx/close_enough_ocr
-  revision: 5d75cd564c6b0da5b6d57d98bd7d0f22d79267c6
+  revision: 941c0574c78798a88ce48ac661347c9047660e03
   branch: master
   specs:
     close_enough_ocr (0.0.1)

@@ -180,10 +180,11 @@
           }
         }); 
         $('form .btn').click(function() {
-          var form = $(this).parents('form');
-          $.post(form.attr('action'), form.serialize(), function (data) {
-            alert('200 OK');
-          });
+          $(this).parents('form').submit();
+          // $.post(form.attr('action'), form.serialize(), function (data) {
+          //  alert('200 OK');
+          //});
+
         });
       });
     </script>
@@ -219,8 +220,8 @@
       </div>
       <div class="modal-footer">
         <div class="input">
-          <form method="post" action="locations/new" enctype="multipart/form-data" name="imgUploadFrm">
-            <input class="input-file" id="fileInput" name="event[flyer]" type="file">
+          <form method="post" action="events/new" enctype="multipart/form-data" name="imgUploadFrm">
+            <input class="input-file" id="fileInput" name="flyer_img" type="file">
             <a href="#" class="btn large primary">Post</a>
           </form>
         </div>
