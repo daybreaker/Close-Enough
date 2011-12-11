@@ -17,3 +17,13 @@ namespace :scrape do
   end
   
 end
+
+namespace :util do
+
+  desc "Digest location names"
+  task :digest_names do
+    Location.all.each { |l| l.digest_name; l.save  }
+  end
+
+end
+

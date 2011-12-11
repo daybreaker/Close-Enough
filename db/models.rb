@@ -21,8 +21,14 @@ ActiveRecord::Base.establish_connection(
 
 class Location < ActiveRecord::Base 
   set_table_name 'locations'
+  before_save :digest_name
 
   has_many :events
+
+  def digest_name
+    self.digested_name = CloseEnough::Fuzzy.digest(self.name)
+  end
+  
 end
 
 class Event < ActiveRecord::Base

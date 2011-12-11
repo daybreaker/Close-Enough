@@ -8,6 +8,7 @@ require 'uri'
 
 require_relative 'db/models'
 require_relative 'db/load_ocr'
+require_relative 'lib/fuzzy'
 
 get '/' do
   erb :index
@@ -20,8 +21,8 @@ end
 
 post '/locations.json' do
   content_type :json
-  incomplete_text = params[:q]
-  Location.find_by_sql "SELECT * from locations where name ilike '%#{incomplete_text}%';"
+  incomplete_text = CloseEnough::Fuzzy.digest(params[:q])
+  Location.find_by_sql "SELECT * from locations where digested_name ilike '%#{incomplete_text}%';"
 end
 
 post '/flyers/new' do
