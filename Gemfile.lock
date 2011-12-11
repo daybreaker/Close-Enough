@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:bhelx/close_enough_ocr
-  revision: 941c0574c78798a88ce48ac661347c9047660e03
+  revision: 1bd9f4d0f6ef00d70daf434fe6a429bace3d6344
   branch: master
   specs:
     close_enough_ocr (0.0.1)
@@ -58,6 +58,7 @@ GEM
     rake (0.9.2.2)
     rake-compiler (0.7.9)
       rake
+    rmagick (2.13.1)
     ruby_parser (2.3.1)
       sexp_processor (~> 3.0)
     sexp_processor (3.0.9)
@@ -88,6 +89,7 @@ DEPENDENCIES
   nokogiri
   pg
   pry
+  rmagick
   shotgun
   sinatra
   sinatra-activerecord

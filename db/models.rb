@@ -2,7 +2,11 @@ require 'carrierwave'
 require 'carrierwave/orm/activerecord'
 
 class FlyerUploader < CarrierWave::Uploader::Base
-  storage :file
+  include CarrierWave::RMagick
+  storage :file 
+  version :thumb do
+    process :resize_to_fit => [640,480]
+  end
 end
 
 ActiveRecord::Base.establish_connection(
@@ -17,8 +21,14 @@ ActiveRecord::Base.establish_connection(
 
 class Location < ActiveRecord::Base 
   set_table_name 'locations'
+  before_save :digest_name
 
   has_many :events
+
+  def digest_name
+    self.digested_name = CloseEnough::Fuzzy.digest(self.name)
+  end
+  
 end
 
 class Event < ActiveRecord::Base

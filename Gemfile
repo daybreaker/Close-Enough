@@ -12,6 +12,8 @@ gem 'geocoder'
 gem 'nokogiri'
 gem 'pry'
 gem 'carrierwave'
+gem 'rmagick'
+
 
 gem 'close_enough_ocr', :git => 'git@github.com:bhelx/close_enough_ocr', :branch => 'master'
 

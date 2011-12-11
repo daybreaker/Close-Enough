@@ -6,28 +6,23 @@ require 'active_support'
 require 'pg'
 require 'uri'
 
+require_relative 'lib/fuzzy'
 require_relative 'db/models'
 require_relative 'db/load_ocr'
 
 get '/' do
-  @locations = Location.all
   erb :index
 end
 
-get '/locations.json' do
+get '/events.json' do
   content_type :json
-  Location.all.to_json
+  Event.future(:tonight).to_json(:include => :location)
 end
 
-post '/flyers/new' do
+post '/locations.json' do
   content_type :json
-  event = Event.new
-  event.flyer = params[:flyer_img][:tempfile]
-  if event.save!
-    { :response => 'SUCCESS', :img_url => event.flyer.url }.to_json 
-  else
-    { :response => 'FAIL', :message => "unable to save event" }.to_json
-  end
+  incomplete_text = CloseEnough::Fuzzy.digest(params[:q])
+  Location.find_by_sql("SELECT * from locations where digested_name ilike '%#{incomplete_text}%';").to_json
 end
 
 post '/events/new' do 
@@ -35,9 +30,22 @@ post '/events/new' do
 
   @event = Event.new
   @event.flyer = params[:flyer_img]
+  
   @event.flyer.store!
   @event.location = CloseEnough::Ocr.locations_from_image(@event.flyer.current_path).first
-
+  
   @event.save
   erb :event
 end
+
+post '/events/update' do
+  @event = Event.find(params[:event_id])
+  
+  @event.location = Location.find(params[:location_id]) if @event.location_id != params[:location_id]
+  @event.band_name = params[:band_name]
+  @event.start = params[:start]
+  
+  @event.save
+  redirect '/'
+end
+

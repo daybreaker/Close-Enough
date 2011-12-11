@@ -90,6 +90,10 @@
                 position: results[0].geometry.location
             });
             //google.maps.event.addListener(marker, 'click', toggleBounce);
+                animation: google.maps.Animation.DROP,
+                position: results[0].geometry.location
+            });
+            //google.maps.event.addListener(marker, 'click', toggleBounce);
             google.maps.event.addListener(marker, 'click', function() {
               infowindow.open(map,marker);
             });
@@ -196,10 +200,6 @@
         $('#datepicker').datepicker({
            onSelect: function(dateText, inst) { reqEventsByDate(); }
         });
-        $('#today').click(function() {
-          $('#datepicker').datepicker("setDate", new Date());
-          reqEventsByDate();
-        }).trigger('click');
         $('#tomorrow').click(function() {
           $('#datepicker').datepicker("setDate", new Date(Date.now() + 86400000));
           reqEventsByDate();
@@ -208,15 +208,15 @@
         // kick off ajax request for locations
         $.ajax({
           type: "GET",
-          url: "locations.json",
+          url: "events.json",
           dataType: "json", 
           success: function(data) {
             console.log('success');
             testData = data;
 
             _.each(data, function(evnt) { 
-               markers.push( setLocMarker(evnt.location));
-               attachInfoWindow(_.last(markers), evnt.location);
+               markers.push( setLocMarker(evnt.event.location));
+               attachInfoWindow(_.last(markers), evnt.event.location);
             });
           },
           error: function(data) {

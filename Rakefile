@@ -17,3 +17,29 @@ namespace :scrape do
   end
   
 end
+
+namespace :util do
+
+  desc "Digest location names"
+  task :digest_names do
+    Location.all.each { |l| l.digest_name; l.save  }
+  end
+
+  desc "Export locations to json"
+  task :export_locations do
+    File.open("locations.json", 'w') do |f|
+      f.write(ActiveSupport::JSON.encode(Location.all))
+    end
+  end
+
+  desc "import locations from json"
+  task :import_locations do
+    File.open("locations.json", 'r') do |f|
+      locs = ActiveSupport::JSON.decode(f.read)
+      locs.map { |l| Location.new(l).save }
+    end
+  end
+
+
+end
+

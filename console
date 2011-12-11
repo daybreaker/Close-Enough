@@ -1,0 +1,4 @@
+#!/bin/sh
+
+bundle exec pry -r ./main.rb
+
