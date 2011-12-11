@@ -22,7 +22,7 @@ end
 post '/locations.json' do
   content_type :json
   incomplete_text = CloseEnough::Fuzzy.digest(params[:q])
-  Location.find_by_sql "SELECT * from locations where digested_name ilike '%#{incomplete_text}%';"
+  Location.find_by_sql("SELECT * from locations where digested_name ilike '%#{incomplete_text}%';").to_json
 end
 
 post '/flyers/new' do
