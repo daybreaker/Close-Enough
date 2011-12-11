@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:bhelx/close_enough_ocr
-  revision: 1bd9f4d0f6ef00d70daf434fe6a429bace3d6344
+  revision: 6d0e99074b1ed7f5d4361b0b247fd9d5562cb8e1
   branch: master
   specs:
     close_enough_ocr (0.0.1)
@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: git@github.com:bhelx/ruby-tesseract.git
-  revision: b52327d10e6bbc5f7039b0205c7a256771bf23ad
+  revision: 043d1c537dd7b120d580a0af866cbb0921646e8a
   branch: master
   specs:
     tesseract (0.0.1)
