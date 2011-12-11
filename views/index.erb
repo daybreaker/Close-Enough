@@ -162,6 +162,11 @@
 
     <script>
       $(document).ready(function() {
+
+        _.templateSettings = {
+          interpolate : /\{\{(.+?)\}\}/g
+        };
+
         $('#post-img-modal').modal({
           keyboard: true,
           backdrop: true
