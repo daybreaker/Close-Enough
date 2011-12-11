@@ -218,12 +218,13 @@
         });
 
         $('form .btn').click(function() {
+          $('#post-evt-modal').modal('hide');
           $('#post-evt-modal').modal('show');
           $(this).parents('form').submit();
         });
 
         $('#search-evt-modal').modal( {backdrop: true});
-        $('#post-evt-modal').modal( {backdrop: 'static'});
+        $('#post-evt-modal').modal( {backdrop: true});
 
         // set the search spinner
         var spin_opts = {
