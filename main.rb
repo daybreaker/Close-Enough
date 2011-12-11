@@ -10,16 +10,16 @@ require_relative 'db/models'
 require_relative 'db/load_ocr'
 
 get '/' do
-  @locations = Location.all
   erb :index
 end
 
-get '/locations.json' do
+get '/events.json' do
   content_type :json
-  Location.all.to_json
+  Event.future(:tonight).to_json(:include => :location)
 end
 
 post '/locations.json' do
+  content_type :json
   incomplete_text = params[:q]
   Location.find_by_sql "SELECT * from locations where name ilike '%#{incomplete_text}%';"
 end
