@@ -37,8 +37,6 @@ class Event < ActiveRecord::Base
   belongs_to :location
   mount_uploader :flyer, FlyerUploader
 
-  before_create :set_date
-
   # example:
   #    Event.future 3, :days
   #    Event.future 6, :hours
@@ -66,11 +64,5 @@ class Event < ActiveRecord::Base
   def self.starts_between(dt1, dt2)
     self.find(:all, :conditions => { :start => dt1..dt2 })
   end
-
-  private
-    def set_date
-      self.start = Time.now
-      self.end = Time.now + 6.hours # 6 hour event
-    end
 
 end
