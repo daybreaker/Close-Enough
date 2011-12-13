@@ -39,7 +39,8 @@ end
 get '/locations.json' do
   content_type :json
   incomplete_text = CloseEnough::Fuzzy.digest(params[:term])
-  Location.find_by_sql("SELECT * from locations where digested_name ilike '%#{incomplete_text}%';").map{ |x| {:id => x.id, :label => x.name , :value => x.name } }.to_json
+  CloseEnough::Ocr::LocationFinder.autocomplete(incomplete_text).map{ |x| {:id => x.id, :label => x.name , :value => x.name } }.to_json
+  #Location.find_by_sql("SELECT * from locations where digested_name ilike '%#{incomplete_text}%';").map{ |x| {:id => x.id, :label => x.name , :value => x.name } }.to_json
 end
 
 post '/events/new' do 
